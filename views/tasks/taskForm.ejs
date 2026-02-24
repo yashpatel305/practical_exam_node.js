@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <%- include('../partials/navbar') %>
+
+  <main class="container">
+    <h1><%= title %></h1>
+
+    <form action="<%= formAction %>" method="POST" class="card form-grid">
+      <label>Title</label>
+      <input type="text" name="title" value="<%= task ? task.title : '' %>" required />
+
+      <label>Description</label>
+      <textarea name="description"><%= task ? task.description : '' %></textarea>
+
+      <label>Status</label>
+      <select name="status">
+        <% ['pending', 'in-progress', 'completed'].forEach((state) => { %>
+          <option value="<%= state %>" <%= task && task.status === state ? 'selected' : '' %>><%= state %></option>
+        <% }) %>
+      </select>
+
+      <label>Due Date</label>
+      <input type="date" name="dueDate" value="<%= task && task.dueDate ? new Date(task.dueDate).toISOString().split('T')[0] : '' %>" />
+
+      <label>Category</label>
+      <select name="category">
+        <option value="">None</option>
+        <% categories.forEach((cat) => { %>
+          <option value="<%= cat._id %>" <%= task && task.category && String(task.category._id || task.category) === String(cat._id) ? 'selected' : '' %>><%= cat.name %></option>
+        <% }) %>
+      </select>
+
+      <% if (currentUser && currentUser.role === 'admin') { %>
+        <label>Owner</label>
+        <select name="owner">
+          <% users.forEach((user) => { %>
+            <option value="<%= user._id %>" <%= task && String(task.owner._id || task.owner) === String(user._id) ? 'selected' : '' %>><%= user.username %> (<%= user.role %>)</option>
+          <% }) %>
+        </select>
+      <% } %>
+
+      <button type="submit"><%= task ? 'Update Task' : 'Create Task' %></button>
+    </form>
+
+    <form action="/tasks/categories" method="POST" class="card form-grid">
+      <h2>Create Category</h2>
+      <label>Category Name</label>
+      <input type="text" name="name" required />
+      <button type="submit">Add Category</button>
+    </form>
+  </main>
+</body>
+</html>

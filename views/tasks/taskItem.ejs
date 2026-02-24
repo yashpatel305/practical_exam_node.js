@@ -1,0 +1,15 @@
+<li class="task-item">
+  <div class="task-item-main">
+    <h3><%= task.title %></h3>
+    <p><%= task.description || 'No description' %></p>
+    <small>Status: <%= task.status %></small>
+    <small>Category: <%= task.category ? task.category.name : 'None' %></small>
+    <small>Owner: <%= task.owner ? task.owner.username : 'Unknown' %></small>
+  </div>
+  <div class="task-actions">
+    <a href="/tasks/<%= task._id %>/edit">Edit</a>
+    <form action="/tasks/<%= task._id %>?_method=DELETE" method="POST" class="inline-form">
+      <button type="submit">Delete</button>
+    </form>
+  </div>
+</li>

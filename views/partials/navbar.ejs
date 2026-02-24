@@ -1,0 +1,18 @@
+<nav class="navbar">
+  <div class="brand"><a href="/tasks">TaskManager</a></div>
+  <div class="links">
+    <% if (currentUser) { %>
+      <a href="/tasks">My Tasks</a>
+      <% if (currentUser.role === 'admin') { %>
+        <a href="/tasks?scope=all">All User Tasks</a>
+      <% } %>
+      <a href="/tasks/new">Task Form</a>
+      <form action="/logout" method="POST" class="inline-form">
+        <button type="submit">Sign Out</button>
+      </form>
+    <% } else { %>
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
+    <% } %>
+  </div>
+</nav>

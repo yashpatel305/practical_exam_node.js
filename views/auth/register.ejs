@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <%- include('../partials/navbar') %>
+
+  <main class="container auth">
+    <h1>Register</h1>
+    <% if (error) { %><p class="error"><%= error %></p><% } %>
+    <form action="/register" method="POST" class="card form-grid">
+      <label>Username</label>
+      <input type="text" name="username" required />
+
+      <label>Password</label>
+      <input type="password" name="password" required minlength="6" />
+
+      <label>Role</label>
+      <select name="role">
+        <option value="user">user</option>
+        <option value="admin">admin</option>
+      </select>
+
+      <button type="submit">Create Account</button>
+    </form>
+  </main>
+</body>
+</html>
